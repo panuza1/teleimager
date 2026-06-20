@@ -1236,8 +1236,6 @@ class IsaacSimCamera(BaseCamera):
             # For WebRTC: use BGR frames directly
             if self._enable_webrtc:
                 self._webrtc_buffer.write(frame_data)
-            else:
-                logger_mp.warning(f"[IsaacSimCamera] Failed to encode to WebRTC for {self._cam_topic}")
             if not self._ready.is_set():
                 self._ready.set()
         else:

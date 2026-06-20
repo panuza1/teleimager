@@ -204,7 +204,7 @@ class ZMQ_PublisherThread(threading.Thread):
                     try:
                         self._socket.send(data, zmq.NOBLOCK)
                     except zmq.Again:
-                        logger_mp.warning(f"High water mark reached for at {self._host}:{self._port}, dropping message")
+                        logger_mp.debug(f"High water mark reached for at {self._host}:{self._port}, dropping message")
                     except zmq.ZMQError as e:
                         logger_mp.error(f"Failed to publish to at {self._host}:{self._port}: {e}")
                         break
