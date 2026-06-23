@@ -1213,16 +1213,12 @@ class IsaacSimCamera(BaseCamera):
             # For binocular cameras: concatenate left + right images
             left_img = self.multi_image_reader.read_single_image('left')
             right_img = self.multi_image_reader.read_single_image('right')
-            logger_mp.debug(f"[IsaacSimCamera] {self._cam_topic} - left: {left_img is not None}, right: {right_img is not None}")
 
             if left_img is not None and right_img is not None:
                 frame_data = cv2.hconcat([left_img, right_img])
-                logger_mp.debug(f"[IsaacSimCamera] {self._cam_topic} - concatenated binocular frame: {frame_data.shape}")
         else:
             # For monocular cameras: use the specified source directly
             frame_data = self.multi_image_reader.read_single_image(self._image_source)
-            if frame_data is None:
-                logger_mp.debug(f"[IsaacSimCamera] {self._cam_topic} - no data for source '{self._image_source}'")
 
         # Publish the frame data only if we have valid data
         if frame_data is not None:
@@ -1239,8 +1235,6 @@ class IsaacSimCamera(BaseCamera):
                 self._webrtc_buffer.write(frame_data)
             if not self._ready.is_set():
                 self._ready.set()
-        else:
-            logger_mp.debug(f"[IsaacSimCamera] No data available for {self._cam_topic}, frame_data is None")
         # If no data is available, just return silently and wait for next frame
 
     def release(self):
