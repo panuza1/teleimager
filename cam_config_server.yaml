@@ -33,12 +33,13 @@ head_camera:
   #   - "opencv"    → opencv driver
   #   - "realsense" → pyrealsense2 driver
   #   - "uvc"       → pyuvc driver
-  type: uvc
+  # RealSense D435i via V4L2/OpenCV (pyuvc has no modes for this device)
+  type: opencv
 
   # Image Format
   # image resolution: [height, width]
-  image_shape: [480, 1280]
-  binocular: true
+  image_shape: [480, 640]
+  binocular: false
   # frame per second
   fps: 30
 
@@ -55,40 +56,41 @@ head_camera:
   #   - type "realsense": supports serial_number only (but a RealSense can also be used as opencv/uvc if desired)
   #   - type "opencv":    supports video_id, serial_number, physical_path
   #   - type "uvc":       supports video_id, serial_number, physical_path
-  video_id: 0
-  serial_number: 01.00.00
-  physical_path: null
+  # Prefer physical_path: same serial appears on multiple /dev/video*
+  video_id: 2
+  serial_number: null
+  physical_path: /sys/devices/platform/3610000.xhci/usb2/2-2/2-2.2/2-2.2:1.0
 
 # =====================================================
 # Left wrist camera configuration
 # =====================================================
 left_wrist_camera:
-  enable_zmq: true
+  enable_zmq: false
   zmq_port : 55556
-  enable_webrtc: true
+  enable_webrtc: false
   webrtc_port : 60002
   webrtc_codec: h264
   type: uvc
   image_shape: [480, 640]
   binocular: false
   fps: 30
-  video_id: 2
-  serial_number: 200901010001
+  video_id: null
+  serial_number: null
   physical_path: null
 
 # =====================================================
 # Right wrist camera configuration
 # =====================================================
 right_wrist_camera:
-  enable_zmq: true
+  enable_zmq: false
   zmq_port : 55557
-  enable_webrtc: true
+  enable_webrtc: false
   webrtc_port: 60003
   webrtc_codec: h264
   type: uvc
   image_shape: [480, 640]
   binocular: false
   fps: 30
-  video_id: 4
-  serial_number: 200901010002
+  video_id: null
+  serial_number: null
   physical_path: null
